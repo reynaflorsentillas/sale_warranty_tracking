@@ -20,15 +20,13 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base',
-                'stock', 
-                'sale_management',],
+    'depends': ['base','sale','sales_team','stock','sale_management'],
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/templates.xml',
+        'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
+        'views/sale_warranty_views.xml',
         'views/product_template.xml',
     ],
     # only loaded in demonstration mode
