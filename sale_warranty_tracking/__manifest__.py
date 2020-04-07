@@ -26,7 +26,9 @@
     'data': [
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
+        'data/warranty_period.xml',        
         'views/sale_warranty_views.xml',
+        'views/product_warranty_period.xml',
         'views/product_template.xml',
     ],
     # only loaded in demonstration mode
