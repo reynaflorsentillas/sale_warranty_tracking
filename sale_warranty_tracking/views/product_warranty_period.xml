@@ -1,0 +1,31 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+    <record model="ir.ui.view" id="warranty_period_form">
+      <field name="name">warranty.period.form</field>
+      <field name="model">product.warranty.period</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name" required="1"/>
+          <field name="days" required="1"/>
+        </tree>
+      </field>
+    </record>    
+    <!-- Top menu item -->
+<!--
+    <menuitem name="sale_warranty_tracking" id="sale_warranty_tracking.menu_root"/>
+-->
+    <!-- menu categories -->
+<!--
+    <menuitem name="Menu 1" id="sale_warranty_tracking.menu_1" parent="sale_warranty_tracking.menu_root"/>
+    <menuitem name="Menu 2" id="sale_warranty_tracking.menu_2" parent="sale_warranty_tracking.menu_root"/>
+-->
+    <!-- actions -->
+<!--
+    <menuitem name="List" id="sale_warranty_tracking.menu_1_list" parent="sale_warranty_tracking.menu_1"
+              action="sale_warranty_tracking.action_window"/>
+    <menuitem name="Server to list" id="sale_warranty_tracking" parent="sale_warranty_tracking.menu_2"
+              action="sale_warranty_tracking.action_server"/>
+-->
+  </data>
+</odoo>

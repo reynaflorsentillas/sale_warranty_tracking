@@ -1,0 +1,30 @@
+<odoo>
+  <data>
+	<record id="vgm_product_form_extend" model="ir.ui.view">
+        <field name="name">vgm_product_form_extend</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+          <xpath expr="//sheet[1]/notebook[1]/page[@name='inventory']" position="after">
+                <page string="Warranty" name="warranty">
+                    <group name="Warranty">
+                        <group>
+                            <field name="is_allowWarranty"/>
+                            <field name="is_alloweRenewal"/>
+                            <field name="warranty_period"/>
+                        </group>                        
+                    </group>
+                    <group name="Other">
+                        <group string="Terms and Condition">
+                            <field name="terms_and_cond" nolabel="1"/>
+                        </group>
+                        <group string="Notes">
+                            <field name="warranty_cond" nolabel="1"/>
+                        </group>                        
+                    </group>                                        
+                </page>          
+          </xpath>
+        </field>
+    </record>
+  </data>
+</odoo>
