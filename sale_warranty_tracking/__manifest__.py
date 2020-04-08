@@ -28,6 +28,8 @@
         'data/ir_sequence_data.xml',
         'views/sale_warranty_views.xml',
         'views/product_template.xml',
+        'views/sale_order_views.xml',
+        'wizard/sale_warranty_add_views.xml',
     ],
     # only loaded in demonstration mode
     'demo': [
