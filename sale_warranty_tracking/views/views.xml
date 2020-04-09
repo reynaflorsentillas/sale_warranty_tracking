@@ -56,5 +56,6 @@
     <menuitem name="Server to list" id="sale_warranty_tracking" parent="sale_warranty_tracking.menu_2"
               action="sale_warranty_tracking.action_server"/>
 -->
+    <menuitem id="menu_report_warranty_analysis" name="Warranty Analysis" action="action_analysis_report_search" parent="sale.menu_sale_report" sequence="2"/>
   </data>
 </odoo>

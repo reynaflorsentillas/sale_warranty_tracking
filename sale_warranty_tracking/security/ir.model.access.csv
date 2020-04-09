@@ -4,3 +4,5 @@ product_warranty_period_sale_admin,"product.warranty.period.sale.admin",model_pr
 product_warranty_period_inv_admin,"product.warranty.period.inv.admin",model_product_warranty_period,stock.group_stock_manager,1,1,1,1
 product_warranty_period_sale_user,"product.warranty.period.sales.user",model_product_warranty_period,sales_team.group_sale_salesman,1,0,0,0
 product_warranty_period_inv_user,"product.warranty.period.inv.user",model_product_warranty_period,stock.group_stock_user,1,0,0,0
+access_warranty_report_salesman,sale.report.user,model_warranty_analysis_report,sales_team.group_sale_salesman,1,1,1,0
+access_warranty_report_manager,sale.report.manager,model_warranty_analysis_report,sales_team.group_sale_manager,1,1,1,1
