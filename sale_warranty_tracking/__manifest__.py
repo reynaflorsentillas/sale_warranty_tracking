@@ -24,9 +24,12 @@
 
     # always loaded
     'data': [
+        'reports/warranty_analysis.xml',
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
+        'data/warranty_period.xml',                
         'views/sale_warranty_views.xml',
+        'views/product_warranty_period.xml',
         'views/product_template.xml',
         'views/sale_order_views.xml',
         'wizard/sale_warranty_add_views.xml',

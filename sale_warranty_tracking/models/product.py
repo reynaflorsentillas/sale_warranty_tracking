@@ -8,7 +8,7 @@ class ProductTemplate(models.Model):
 
     is_allowWarranty = fields.Boolean(string="Allow Warranty")
     is_alloweRenewal = fields.Boolean(string="Allow Renewal")
-    terms_and_cond = fields.Text(string="Allow Renewal")
+    terms_and_cond = fields.Text(string="Terms and Condition")
     warranty_cond = fields.Text(string="Notes")
     warranty_period = fields.Many2one('product.warranty.period', string= "Warranty Period")
 
