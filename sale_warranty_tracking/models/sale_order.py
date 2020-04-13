@@ -4,7 +4,7 @@ from odoo.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    warranty_ids = fields.Many2many('sale.warranty', string='Invoices', compute="_get_warranty", readonly=True, copy=False)
+    warranty_ids = fields.Many2many('sale.warranty', string='Waranties', compute="_get_warranty", readonly=True, copy=False)
     warranty_count = fields.Integer(string='Warranty Count', compute='_get_warranty', readonly=True)
 
     @api.depends('order_line.warranty_ids')

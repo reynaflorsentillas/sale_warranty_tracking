@@ -8,6 +8,7 @@
                  <pivot string="Warranty Analysis" disable_linking="True">
                      <field name="partner_id" type="col"/>
                      <field name="product_id" type="row"/>
+                     <field name="nbr" type="measure"/>
                      <!--<field name="nbr" type="measure"/>-->
                  </pivot>
              </field>
@@ -18,8 +19,8 @@
             <field name="model">warranty.analysis.report</field>
             <field name="arch" type="xml">
                 <graph string="Warranty Analysis" type="line">
-                    <field name="expiration_days" type="row"/>
-                    <!--<field name="nbr" type="measure"/>-->
+                    <field name="product_id" type="row"/>
+                    <field name="nbr" type="measure"/>
                 </graph>
             </field>
         </record>  
@@ -28,116 +29,52 @@
             <field name="name">warranty.analysis.search</field>
             <field name="model">warranty.analysis.report</field>
             <field name="arch" type="xml">
-                <search string="Warranty Analysis Analysis">
-                <!--
+                <search string="Warranty Analysis Analysis">                
                     <filter name="draft" string="Quotations" domain="[('state','=', 'draft')]"/>
                     <filter name="inwarranty" string="Warranty" domain="[('state','=', 'warranty')]"/>
                     <filter name="expired" string="Expired" domain="[('state','=', 'expired')]"/>
-                -->
+
+                    <filter name="expired30days" string="30 Days Before Expiration" 
+                            domain="[('expiration_days', '&gt;=' ,1),
+                                     ('expiration_days', '&lt;=' ,30),
+                                     ('state','=', 'warranty')]"/>
+
+                    <filter name="expired90days" string="90 Days Before Expiration" 
+                            domain="[('expiration_days', '&gt;' ,60),
+                                     ('expiration_days', '&lt;=' ,90),
+                                     ('state','=', 'warranty')]"/>
+
+                    <filter name="expired120days" string="120 Days Before Expiration" 
+                            domain="[('expiration_days', '&gt;' ,90),
+                                     ('expiration_days', '&lt;=' ,120),
+                                     ('state','=', 'warranty')]"/>
+
+                    <filter name="expiredGT120days" string="Greater than 120 Days Before Expiration" 
+                            domain="[('expiration_days', '&gt;=' ,120),
+                                     ('state','=', 'warranty')]"/>
+
+                    
+                
                     <separator/>
                     <field name="partner_id"/>
                     <field name="product_id"/>
                     <field name="expiration_days"/>
                     <field name="total_expiration_in_days"/> 
-                    <!--
-                    <group expand="0" string="Extended Filters">
-                        <field name="categ_id" filter_domain="[('categ_id', 'child_of', self)]"/>
-                        <field name="company_id" groups="base.group_multi_company"/>
-                    </group>
-                    -->                   
+                    <field name="state"/>      
+                    
                     <group expand="1" string="Group By">
                         <filter string="Customer" name="Customer" context="{'group_by':'partner_id'}"/>
                         <filter string="Product" name="Product" context="{'group_by':'product_id'}"/>
-                        <!--
+                        
                         <filter name="status" string="Status" context="{'group_by':'state'}"/>
-                        -->
-                        <filter string="Company" name="company" groups="base.group_multi_company" context="{'group_by':'company_id'}"/>
-                        <separator/>                        
+                        <separator/>                                             
                         <filter string="Remaining Days Before Expiration" name="expiration_days" context="{'group_by':'expiration_days'}"/>
+                        
                     </group>
+                    
                 </search>
             </field>
-        </record>              
-<!--
-        <record id="warranty_analysis_report_view_dashboard" model="ir.ui.view">
-            <field name="name">warranty.analysis.dashboard</field>
-            <field name="model">warranty.analysis.report</field>
-            <field name="mode">primary</field>
-            <field name="arch" type="xml">
-                <dashboard>
-                    <view type="graph" ref="sale.view_order_product_graph"/>
-                    <group>
-                        <group>
-                            <aggregate name="price_subtotal_confirmed_orders" string="Total Sales" field="price_total" help="Total, Tax Included" widget="monetary"/>
-                            <aggregate name="price_subtotal_all_orders" string="Untaxed Total" field="price_subtotal" widget="monetary"/>
-                            <aggregate name="order_id_confirmed_orders" field="order_id" string="Orders"/>
-                            <formula name="total" string="Average Order" value="record.price_subtotal_confirmed_orders / record.order_id_confirmed_orders" widget="monetary"/>
-                            <aggregate name="days_to_confirm" string="Days to Confirm" field="days_to_confirm" group_operator="avg"
-                        value_label="days"/>
-                            <aggregate name="customers" string="# Customers" field="partner_id"/>
-                            <aggregate name="lines" string="# Lines" field="nbr"/>
-                        </group>
-                        <group col="1">
-                            <widget name="pie_chart" title="Sales Teams" attrs="{'groupby': 'team_id'}"/>
-                        </group>
-                    </group>
-                    <view type="pivot" ref="sale_enterprise.sale_report_view_pivot"/>
-                </dashboard>
-            </field>
         </record>
-
-        <record id="sale.action_order_report_so_salesteam" model="ir.actions.act_window">
-            <field name="view_mode">dashboard</field>
-            <field name ="view_id" ref="sale_report_view_dashboard"/>
-        </record>
-
-        <record id="sale_report_action_dashboard" model="ir.actions.act_window">
-            <field name="name">Sales Analysis</field>
-            <field name="res_model">sale.report</field>
-            <field name="view_mode">dashboard,pivot,graph</field>
-            <field name="search_view_id" ref="sale.view_order_product_search"/>
-            <field name="context" eval="{'search_default_Sales': 1, 'time_ranges': {'field':'date_order', 'range':'last_30_days'}}"/>
-        </record>
-
-        <record id="sale_report_action_dashboard_dashboard" model="ir.actions.act_window.view">
-        	<field name="sequence" eval="1"/>
-        	<field name="view_mode">dashboard</field>
-        	<field name="view_id" ref="sale_report_view_dashboard"/>
-        	<field name="act_window_id" ref="sale_report_action_dashboard"/>
-        </record>
-
-        <record id="sale_report_action_dashboard_pivot" model="ir.actions.act_window.view">
-        	<field name="sequence" eval="2"/>
-        	<field name="view_mode">pivot</field>
-        	<field name="view_id" ref="sale_enterprise.sale_report_view_pivot"/>
-        	<field name="act_window_id" ref="sale_report_action_dashboard"/>
-        </record>
-
-        <record id="sale_report_action_dashboard_graph" model="ir.actions.act_window.view">
-        	<field name="sequence" eval="3"/>
-        	<field name="view_mode">graph</field>
-        	<field name="view_id" ref="sale.view_order_product_graph"/>
-        	<field name="act_window_id" ref="sale_report_action_dashboard"/>
-        </record>
-
-        <record id="sale.menu_report_product_all" model="ir.ui.menu">
-            <field name="action" ref="sale_report_action_dashboard"/>
-        </record>
-
-        <record id="view_order_product_search_inherit" model="ir.ui.view">
-            <field name="name">view.order.product.search.inherit</field>
-            <field name="mode">primary</field>
-            <field name="model">sale.report</field>
-            <field name="inherit_id" ref="sale.view_order_product_search"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='partner_id']" position="before">
-                    <filter name="to_invoice" string="To Invoice" domain="[('invoice_status', '=', 'to invoice')]"/>
-                    <filter name="fully_invoiced" string="Fully Invoiced" domain="[('invoice_status', '=', 'invoiced')]"/>
-                </xpath>
-            </field>
-        </record>
--->
-
 
         <record id="action_analysis_report_search" model="ir.actions.act_window">
             <field name="name">Warranty Analysis</field>
