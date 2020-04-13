@@ -47,7 +47,7 @@ class SaleWarrantyAdd(models.TransientModel):
 
     @api.onchange('product_id')
     def onchange_product_id(self):
-        self.warranty_period = self.product_id.warranty_period.days
+        self.warranty_period = int(self.product_id.warranty_period.days / 30)
 
     @api.onchange('warranty_period')
     def onchange_warranty_period(self):
@@ -57,8 +57,8 @@ class SaleWarrantyAdd(models.TransientModel):
         self.expiry_date = expiry_date
 
     def confirm_warranty(self):
-        # if self.product_id and self.product_id.is_allowWarranty != True:
-        #     raise UserError(_('Product is not configured for warranty!'))
+        if self.product_id and self.product_id.ProductAllowedWarranty() != True:
+             raise UserError(_('Product is not configured for warranty!'))
         warranty_id = self.env['sale.warranty'].sudo().create({
             'sale_id': self.sale_id.id,
             'sale_line_id': self.sale_line_id.id,
@@ -74,6 +74,9 @@ class SaleWarrantyAdd(models.TransientModel):
         self.sale_line_id.write({'warranty_ids':[(6, 0, warranty_id.ids)]})
     
     def add_warranty(self):
+        if self.product_id and self.product_id.ProductAllowedWarranty() != True:
+            raise UserError(_('Product is not configured for warranty!'))
+
         # if self.product_id and self.product_id.is_allowWarranty != True:
         #     raise UserError(_('Product is not configured for warranty!'))
         warranty_id = self.env['sale.warranty'].sudo().create({
