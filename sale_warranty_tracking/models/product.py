@@ -13,6 +13,7 @@ class ProductTemplate(models.Model):
     warranty_period = fields.Many2one('product.warranty.period', string= "Warranty Period")
 
 
+
     @api.model
     def ProductAllowedWarranty(self, product_tmpl_id = False):
         if product_tmpl_id:
@@ -29,6 +30,12 @@ class ProductProduct(models.Model):
         self.ensure_one()
         for rec in self:
             return rec.product_tmpl_id.ProductAllowedWarranty(rec.product_tmpl_id.id)
+
+
+    
+
+#class ProductProduct(models.Model):
+#    _inherit = 'product.product'
 
 #
 #    is_allowWarranty = fields.Boolean(string="Allow Warranty")
