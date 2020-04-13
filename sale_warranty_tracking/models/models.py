@@ -20,5 +20,7 @@ from odoo import models, fields, api
 class ProductWarrantyPeriod(models.Model):
     _name = 'product.warranty.period'
 
+    _description='Warranty Period List'
+
     name = fields.Char(string= 'Period Name')
     days = fields.Integer(string="Days")
